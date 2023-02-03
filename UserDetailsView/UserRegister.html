@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #17a2b8;
+            height: 100vh;
+        }
+
+        #login .container #login-row #login-column #login-box {
+            margin-top: 120px;
+            max-width: 600px;
+            border: 1px solid #9C9C9C;
+            background-color: #EAEAEA;
+        }
+
+            #login .container #login-row #login-column #login-box #registration-form {
+                padding: 20px;
+            }
+
+        input[type='radio'] {
+            margin-right: 6px;
+        }
+    </style>
+
+    <script>
+
+        $(document).ready(function () {
+            $("#btnSubmit").click(function () {
+
+                if ($("#txtPassword").val() != "" && $("#txtPassword").val() == $("#txtConfirmPassword").val()) {
+
+
+                    $.ajax({
+                        url: 'https://localhost:7103/UserRegistration/Register', //Get?num1=4&num2=2&typeid=2',
+                        dataType: 'json',
+                        method: "POST",
+                        data: {
+                            'FirstName': $("#txtFName").val(), 'LastName': $("#txtLName").val(), 'EmailId': $('#txtEmailId').val(),
+                            'Password': $("#txtPassword").val(), 'MobileNumber': $("#txtMobNo").val(), 'Gender': $('input[name="rdGender"]:checked').val(),
+                            'DOB': $("#txtDOB").val()
+                        },
+                        success: function (obj) {
+                            alert('User Registerd, Please Login In')
+                            window.location.href = 'UserLogin.html';
+                        },
+                        error: function (xhr, status, error) {
+                            alert('Error');
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(error);
+                        }
+                    })
+
+                }
+                else {
+                    alert('Password Mismatch');
+                    $("#txtConfirmPassword").val('');
+                }
+
+            });
+        });
+
+    </script>
+
+</head>
+<body>
+
+
+    <div id="login">
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+                        <form id="registration-form" class="form">
+                            <h3 class="text-center text-info">Register User</h3>
+                            <div class="form-group">
+                                <label for="txtFName" class="text-info">First Name</label><br>
+                                <input type="text" name="txtFName" id="txtFName" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtLName" class="text-info">Last Name</label><br>
+                                <input type="text" name="txtLName" id="txtLName" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtEmailId" class="text-info">EmailId</label><br>
+                                <input type="text" name="txtEmailId" id="txtEmailId" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtPassword" class="text-info">Password</label><br>
+                                <input type="password" name="txtPassword" id="txtPassword" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtConfirmPassword" class="text-info">Confirm Password</label><br>
+                                <input type="password" name="txtConfirmPassword" id="txtConfirmPassword" class="form-control">
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="txtMobNo" class="text-info">Mobile Number</label><br>
+                                <input type="text" name="txtMobNo" id="txtMobNo" class="form-control">
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="txtFName" class="text-info">Gender</label><br>
+                                <!--<input type="text" name="txtFName" id="txtFName" class="form-control">-->
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label class="radio-inline">
+                                            <input type="radio" id="rdGenderFemale" value="Female" name="rdGender">Female
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label class="radio-inline">
+                                            <input type="radio" id="rdGenderMale" value="Male" name="rdGender">Male
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtDOB" class="text-info">Date of Birth</label><br>
+                                <input type="date" id="txtDOB" name="txtDOB" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <br>
+                                <input type="button" id="btnSubmit" name="submit" class="btn btn-info btn-md" value="Register">
+                            </div>
+
+                            <!--<div>
+
+                                First Name : <input type="text" id="txtFName" name="txtFName" /><br />
+                                Last Name : <input type="text" id="txtLName" name="txtLName" /><br />
+                                EmailId : <input type="text" id="txtEmailId" name="txtEmailId" /><br />
+                                Password : <input type="password" id="txtPassword" name="txtPassword" /><br />
+                                Confirm Password : <input type="password" id="txtConfirmPassword" name="txtConfirmPassword" /><br />
+                                Mobile Number : <input type="text" id="txtMobNo" name="txtMobNo" /><br />
+                                Gender : <input type="radio" id="rdGenderMale" name="rdGender" value="Male" /><label for="rdGenderMale">Male</label> &nbsp;&nbsp;
+                                <input type="radio" id="rdGenderFemale" name="rdGender" value="Female" /><label for="rdGenderFemale">Female</label> <br />
+                                Date of Birth : <input type="text" id="txtDOB" name="txtDOB" /><br /><br />
+
+                                <input type="Submit" id="btnSubmit" value="Register" /><br /><br />
+
+                                <span id="spnMsg"></span>
+
+                            </div>-->
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
